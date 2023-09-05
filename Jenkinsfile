@@ -45,7 +45,7 @@ pipeline {
             steps {
                 input 'Deploy to Production?'
                 milestone(1)
-                //Logic to deploy K8s pod to raspbpi cluster
+                //Logic to deploy K8s pod to raspbpi cluster using kubernetes-cd plugin
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'train-schedule-kube.yml',
