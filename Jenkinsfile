@@ -46,11 +46,12 @@ pipeline {
                 input 'Deploy to Production?'
                 milestone(1)
                 //Logic to deploy K8s pod to raspbpi cluster using kubernetes-cd plugin v1.0.0
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube.yml',
-                    enableConfigSubstitution: true
-                )
+                //kubernetesDeploy(
+                //    kubeconfigId: 'kubeconfig',
+                //    configs: 'train-schedule-kube.yml',
+                //    enableConfigSubstitution: true
+                //)
+                kubernetesDeploy configs: 'train-schedule-kube.yml', dockerCredentials: [[credentialsId: 'docker_hub_login', url: 'https://hub.docker.com/']], kubeConfig: [path: ''], kubeconfigId: 'kubeconfig', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
             }
         }
     }
