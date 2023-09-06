@@ -71,11 +71,9 @@ pipeline {
                 input 'Deploy to Production?'
                 milestone(1)
                 //Logic to deploy K8s pod to raspbpi cluster using kubernetes-cd plugin v1.0.0
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube.yml',
-                    enableConfigSubstitution: true
-                )
+                withKubeConfig([credentialsId: 'kubeconfig-file']) {
+                      sh 'kubectl apply -f $JENKINS_HOME/workspace/train-schedule-kubernetes_master/train-schedule-kube.yml'
+                }
             }
         }
     }
