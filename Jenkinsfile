@@ -1,4 +1,4 @@
-pipeline {
+/*pipeline {
     agent any
     environment {
         //be sure to replace "willbla" with your own Docker Hub username
@@ -46,13 +46,29 @@ pipeline {
                 input 'Deploy to Production?'
                 milestone(1)
                 //Logic to deploy K8s pod to raspbpi cluster using kubernetes-cd plugin v1.0.0
-                //kubernetesDeploy(
-                //    kubeconfigId: 'kubeconfig',
-                //    configs: 'train-schedule-kube.yml',
-                //    enableConfigSubstitution: true
-                //)
-                kubernetesDeploy configs: 'train-schedule-kube.yml', dockerCredentials: [[credentialsId: 'docker_hub_login', url: 'https://hub.docker.com/']], kubeConfig: [path: ''], kubeconfigId: 'kubeconfig', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'train-schedule-kube.yml',
+                    enableConfigSubstitution: true
+                )
             }
         }
     }
-}
+} */
+
+pipeline {
+    stage('DeployToProduction') {
+            when {
+                branch 'master'
+            }
+            steps {
+                input 'Deploy to Production?'
+                milestone(1)
+                //Logic to deploy K8s pod to raspbpi cluster using kubernetes-cd plugin v1.0.0
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'train-schedule-kube.yml',
+                    enableConfigSubstitution: true
+                )
+            }
+    }
