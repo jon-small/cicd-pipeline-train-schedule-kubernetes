@@ -49,7 +49,6 @@ pipeline {
                 withKubeConfig([credentialsId: 'kubeconfig-file']) {
                       sh 'k3s kubectl apply -f $JENKINS_HOME/workspace/train-schedule-kubernetes_master/train-schedule-kube.yml'
                 }
-                )
             }
         }
     }
